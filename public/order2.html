@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="img/favicon.png">
+	<!-- Author Meta -->
+	<meta name="author" content="NargesFayazian">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>HelpMate</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:100,300,500" rel="stylesheet">
+		<!--
+		CSS
+		============================================= -->
+		<link rel="stylesheet" href="css/linearicons.css">
+		<link rel="stylesheet" href="css/owl.carousel.css">
+		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/nice-select.css">
+		<link rel="stylesheet" href="css/magnific-popup.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/main.css">
+    </head>
+    <style>
+        #map {
+            height: 80%;
+            width: 100%;
+            margin-top: 10%;
+            margin-bottom: 20%;
+        }
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    
+        #description {
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+        }
+    
+        #infowindow-content .title {
+            font-weight: bold;
+        }
+    
+        #infowindow-content {
+            display: none;
+        }
+    
+        #map #infowindow-content {
+            display: inline;
+        }
+    
+        .pac-card {
+            margin: 10px 10px 0 0;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            font-family: Roboto;
+        }
+    
+        #pac-container {
+            padding-bottom: 12px;
+            margin-right: 12px;
+        }
+    
+        .pac-controls {
+            display: inline-block;
+            padding: 5px 11px;
+        }
+    
+        .pac-controls label {
+            font-family: Roboto;
+            font-size: 13px;
+            font-weight: 300;
+            overflow: scroll;
+        }
+    
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 400px;
+        }
+    
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+    
+        #title {
+            color: #fff;
+            background-color: #4d90fe;
+            font-size: 25px;
+            font-weight: 500;
+            padding: 6px 12px;
+        }
+    </style>
+	<body>
+	<div class="oz-body-wrap">
+		<!-- Start Header Area -->
+		<header class="default-header">
+			<div class="container-fluid">
+				<div class="header-wrap">
+					<div class="header-top d-flex justify-content-between align-items-center">
+						<div class="logo">
+							<a href="index.html"><img src="img/logo.png" alt=""></a>
+						</div>
+						<div class="main-menubar d-flex align-items-center">
+							<nav class="hide">
+								<a href="index.html">Home</a>
+								<a href="login.html">Login</a>
+								<a href="list.html">List of orders</a>
+							</nav>
+							<div class="menu-bar"><span class="lnr lnr-menu"></span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- End Header Area -->
+		<!-- Start Banner Area -->
+		<section class="banner-area relative">
+			<div class="container">
+				<div class="row fullscreen align-items-center justify-content-center">
+					<div class="banner-left col-lg-6">
+						<img class="d-flex mx-auto img-fluid" src="img/image1.png" alt="">
+					</div>
+					<div class="col-lg-6">
+                       
+                                <div class="pac-card" id="pac-card">
+                                        <div>
+                                            <div id="title">
+                                                search
+                                            </div>
+                                
+                                        </div>
+                                        <div id="pac-container">
+                                            <input id="pac-input" type="text" placeholder="Enter a location">
+                                        </div>
+                                    </div>
+                                    <div id="map"></div>
+                                    <div id="infowindow-content">
+                                        <img src="" width="16" height="16" id="place-icon">
+                                        <span id="place-name" class="title"></span><br>
+                                        <span id="place-address"></span>
+                                    </div>
+                                    <script>
+                                        var place;
+                                        var locate;
+                                        var store;
+                                        var map, infoWindow;
+                                        function initMap() {
+                                            var map = new google.maps.Map(document.getElementById('map'), {
+                                                center: { lat: 38.8462236, lng: -77.3063733 },
+                                                zoom: 13
+                                            });
+                                            infoWindow = new google.maps.InfoWindow;
+                                            var card = document.getElementById('pac-card');
+                                            var input = document.getElementById('pac-input');
+                                            var types = document.getElementById('type-selector');
+                                            var strictBounds = document.getElementById('strict-bounds-selector');
+                                            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+                                            var autocomplete = new google.maps.places.Autocomplete(input);
+                                            autocomplete.bindTo('bounds', map);
+                                            var marker = new google.maps.Marker({
+                                                map: map,
+                                                icon: {
+                                                    path: google.maps.SymbolPath.CIRCLE,
+                                                    scale: 10
+                                                },
+                                                anchorPoint: new google.maps.Point(0, -29)
+                                            });
+                                            autocomplete.addListener('place_changed', function () {
+                                                marker.setVisible(false);
+                                                place = autocomplete.getPlace();
+                                                locate = place.formatted_address;
+                                                $("#locate").attr("placeholder", locate);
+                                                console.log(locate);
+                                                store = place.name;
+                                                $("#store").attr("placeholder", store);
+                                                console.log(store);
+                                                marker.setPosition(place.geometry.location);
+                                                marker.setVisible(true);
+                                                var address = '';
+                                                if (place.address_components) {
+                                                    address = [
+                                                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                                                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                                                        (place.address_components[2] && place.address_components[2].short_name || '')
+                                                    ].join(' ');
+                                                }
+                                                infowindowContent.children['place-icon'].src = place.icon;
+                                                infowindowContent.children['place-name'].textContent = place.name;
+                                                infowindowContent.children['place-address'].textContent = address;
+                                                infowindow.open(map, marker);
+                                            });
+                                            if (navigator.geolocation) {
+                                                navigator.geolocation.getCurrentPosition(function (position) {
+                                                    var pos = {
+                                                        lat: position.coords.latitude,
+                                                        lng: position.coords.longitude
+                                                    };
+                                                    map.setCenter(pos);
+                                                    new google.maps.Marker({
+                                                        position: pos,
+                                                        icon: {
+                                                            path: google.maps.SymbolPath.CIRCLE,
+                                                            scale: 10
+                                                        },
+                                                        map: map
+                                                    });
+                                                }, function () {
+                                                    handleLocationError(true, infoWindow, map.getCenter());
+                                                });
+                                            } else {
+                                                handleLocationError(false, infoWindow, map.getCenter());
+                                            }
+                                        }
+                                        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                                            infoWindow.setPosition(pos);
+                                            infoWindow.setContent(browserHasGeolocation ?
+                                                'Error: The Geolocation service failed.' :
+                                                'Error: Your browser doesn\'t support geolocation.');
+                                            infoWindow.open(map);
+                                        }
+                                    </script>
+                                
+                                    <!-- **** Map **** -->
+                                    <script
+                                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu7WV1wCioJ7IRtL6Sr6by792KyBIvk-0&libraries=places&callback=initMap"
+                                        async defer></script>
+                            </div>
+                        <div class="row "><form>
+                            <div class="row">
+                                <div class="col-12 col-lg-10">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <input class="form-control" type="text" id="store_name" placeholder="Store">
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <input class="form-control" type="text" id="order_location" placeholder="locate">
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <input class="form-control" type="text" id="order_info" placeholder="I need ....">
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <select name="size" id="size" class="form-control">
+                                                <option value="size">Size</option>
+                                                <option value="small">Small</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="large">Large</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <select name="all" id="quantity" class="form-control">
+                                                <option value="00">Quantity</option>
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-12 col-md-6 col-lg-3">
+                                            <input class="form-control" type="time" id="expier_time" placeholder="time">
+                                        </div>
+                                        
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <button type="submit" class="btn rehomes-search-btn" style="border-radius: 4px;"
+                                        id="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form></div>
+					</div>
+				</div> 
+			</div>
+		</section>
+		
+		<script src="js/vendor/jquery-2.2.4.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/jquery.ajaxchimp.min.js"></script>
+		<script src="js/owl.carousel.min.js"></script>
+		<script src="js/jquery.nice-select.min.js"></script>
+		<script src="js/jquery.magnific-popup.min.js"></script>
+		<script src="js/jquery.counterup.min.js"></script>
+		<script src="js/waypoints.min.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>
