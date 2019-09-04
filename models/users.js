@@ -3,9 +3,8 @@ module.exports = function (sequelize, DataTypes) {
         frist_name: DataTypes.STRING,
         last_name: DataTypes.STRING,
         phone: DataTypes.TEXT,
-        Email:{ type:DataTypes.TEXT, allowNull: false, },
-        password: DataTypes.TEXT,
-        confirm_password: DataTypes.TEXT
+        Email:DataTypes.TEXT,
+        password: DataTypes.TEXT
 
     });
     users.associate = function(models) {

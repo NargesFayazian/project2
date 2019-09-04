@@ -9,8 +9,7 @@ app.post("/api/users", function(req, res) {
       last_name: req.body.last_name,
       phone: req.body.phone,
       Email: req.body.Email,
-      password:req.body.password,
-      confirm_password:req.body.confirm_password}).then(function(dbusers) {
+      password:req.body.password}).then(function(dbusers) {
       res.json(dbusers);
     });
   });
@@ -23,7 +22,7 @@ app.post("/api/users", function(req, res) {
         order_info: req.body.order_info,
         size:req.body.size,
         quantity: req.body.quantity,
-        expier_time:req.body.expier_time}).then(function(dborders) {
+        }).then(function(dborders) {
         res.json(dborders);
       });
     });
@@ -63,5 +62,14 @@ app.get('/api/all', (req, res) => {
     res.json(resObj)
   });
 });
-
+//=========================search user===========================================
+app.get("/api/:Email", function(req, res) {
+  db.users.findOne({
+    where: {
+      Email: req.params.Email
+    }
+  }).then(function(dbusers) {
+    res.json(dbusers);
+  });
+});
   }

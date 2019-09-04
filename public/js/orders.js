@@ -8,7 +8,7 @@ console.log("hi");
             order_info: $("#order_info").val().trim(),
             size: $("#size").val(),
             quantity: $("#quantity").val(),
-            expier_time: $("#expier_time").val().trim()
+            
         };
 
         $.post("/api/orders",newOrders).then(function (data) {
@@ -20,5 +20,5 @@ $("#order_location").val("");
         $("#order_info").val("");
         $("#size").val("");
         $("#quantity").val("");
-        $("#expier_time").val("");
+      
     });

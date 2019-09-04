@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $.get("/api/all", function(data) {
+    $.get("/api/", function(data) {
         if (data.length !== 0) {
     
             for (var i = 0; i < data.length; i++) {

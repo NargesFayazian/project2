@@ -4,8 +4,8 @@ module.exports = function (sequelize, DataTypes) {
         order_location: DataTypes.STRING,
         order_info: DataTypes.STRING,
         size: DataTypes.STRING,
-        quantity: DataTypes.STRING,
-        expier_time: DataTypes.TIME
+        quantity: DataTypes.STRING
+        
     });
     orders.associate = function(models) {
         // We're saying that a Post should belong to an Author
